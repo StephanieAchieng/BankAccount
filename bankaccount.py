@@ -1,7 +1,7 @@
-class BankAccount:
+class Account:
    
 
-    def __init__(self, first_name, last_name, phone_no, bank):
+    def __init__(self, first_name, last_name, phone_no):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_no = phone_no
@@ -10,7 +10,8 @@ class BankAccount:
         self.withdraw_statement = []
         self.deposit_statement = []
         self.loan_balance = 0
-
+        self.request_loan=0
+        self.
     def account_name(self):
         name = "{} account for {} {}".format(
             self.bank, self.first_name, self.last_name, self.phone_no, self.bank)
@@ -79,15 +80,28 @@ class BankAccount:
             get_time = time.strftime("%H:%M%p  %d/%m/%Y")
             get_time = time.strftime("%H:%M%p , ++ %d/%m/%Y")
             print("{} at {}".format(withdraw(),get_time))
-             def request_loan(self, amount):
-      if amount<= 0:
-        print("You cannot request for a loan of this amount")
-        
-      else: 
-        self.loan = amount
-        print("You have received a loan of {}".format (amount)
+             
+
+    def request_loan(self, amount):
+        try:
+            amount + 10
+        except TypeError:
+            print("Please enter the requested amount in figures")
+            return
+
+        if amount <=0:
+            print("You cannot request a loan of that amount")
+        else:
+            self.loan = amount
+            print("You have been given a loan of {}".format(amount))
       
     def repay_loan(self, amount):
+      try:
+          amount + 10
+      except TypeError:
+          print("Enter your repayment in figures")
+          return
+       
       if amount<= 0:
         print("You cannot repay with that amount")
       elif self.loan == 0:
@@ -95,28 +109,115 @@ class BankAccount:
         elif amount > self.loan:
           print("Your loan is {}, please enter amount that is less or equal to the amount")
         else:
-        print(" You have repayed your loan with {}. Your loan balance is{}".format(mount))
+            self.loan -= amount
+            time = datetime.now()
+            repayment ={
+                "time": time,
+                "amount": amount
+            }
+            self.loan_repayments.append(repayment)
+            print("You have repaid your loan with {}. Your balance is {}".format(amount, self.loan)    
        
     def deposit_statement(self, amount):
       self.deposit(self, amount)
       
       return self.deposit_statement.append(amount)
       
-      
+
+class BankAccount(Account):
+    def __init__(self, first_name, last_name, phone_number, bank):
+        self.bank = bank
+        super().__init__(first_name, last_name, phone_number)
+
+class MobileMoneyAccount(Account):
+    def __init__(self, first_name, last_name, phone_number, service_provider):
+        self.service_provider = service_provider
+        self.airtime = []
+        super().__init__(first_name, last_name, phone_number)
+
+    def buy_airtime(self, amount):
+        try:
+            amount + 1
+        except TypeError:
+            print("Please enter the amount in figures")
+            return
+        if amount > self.balance:
+            print("You don't have enough balance. Your balance is {}".format(self.balance))
+        else:
+            self.balance -= amount
+            time=datetime.now()
+            airtime = {
+                "time": time,
+                "airtime": amount
+            } 
+            self.airtime.append(airtime)
+            print("You have bought airtime worth {} on {}".format(amount, self.get_formatted_time(time)))
+
+   def pay_bill(self, amount):
+        try:
+            amount + 1
+        except TypeError:
+            print("Please enter the amount in figures")
+            return
+        if amount > self.balance:
+            print("You don't have enough balance. Your balance is {}".format(self.balance))
+        else:
+            self.balance -= amount
+            time=datetime.now()
+            paybill = {
+                "time": time,
+                "paybill": amount
+            } 
+            self.paybill.append(paybill)
+            print("You have paid bills worth {} on {}".format(amount, self.get_formatted_time(time)))
+
+    def send_money(self, amount):
+        try:
+            amount + 1
+        except TypeError:
+            print("Please enter the amount to send in figures")
+            return
+        if amount > self.balance:
+            print("You don't have enough balance. Your balance is {}".format(self.balance))
+        else:
+            self.balance -= amount
+            time=datetime.now()
+            sendmoney = {
+                "time": time,
+                "sendmoney": amount
+            } 
+            self.sendmoney.append(sendmoney)
+            print("You have sent money worth {} on {}".format(amount, self.get_formatted_time(time)))
+
+    def receive_money(self, amount):
+        try:
+            amount + 1
+        except TypeError:
+            print("Please enter the amount in figures")
+            return
+        if amount > self.balance:
+            print("You don't have enough balance. Your balance is {}".format(self.balance))
+        else:
+            self.balance -= amount
+            time=datetime.now()
+            receivemoney = {
+                "time": time,
+                "receivemoney": amount
+            } 
+            self.receivemoney.append(receivemoney)
+            print("You have received money worth {} on {}".format(amount, self.get_formatted_time(time)))
+
+             
     
-    
-acc1 = BankAccount("Stephanie", "Achieng", +254727088262, "Barclays")
+acc1 = Account("Stephanie", "Achieng", +254727088262, "Barclays")
 print(acc1.phone_no)
 acc1.deposit(450000)
 acc1.withdraw(12500)
 acc1.withdraw(1390)
 acc1.deposit(5700)
 acc1.deposit(3500)
-acc1.lend_loan(71000)
-acc1.lend_loan(5000)
-acc1.pay_loan(57000) 
-print(acc1.loan_balance)
 
-print(acc1.deposit_summary)
+
+print(acc1.deposit_statement)
 
 
